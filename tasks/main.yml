@@ -30,14 +30,13 @@
   become: true
   notify: Restart element-web
 
-- name: Deploy config.json
+- name: Deploy Element config.json
   ansible.builtin.template:
     src: config.json.j2
     dest: "{{ element_base_dir }}/config.json"
     owner: "{{ deploy_user }}"
     group: "{{ deploy_user }}"
-    mode: "0640"
-  become: true
+    mode: "0644"
   notify: Restart element-web
 
 - name: Pull Element Web image
