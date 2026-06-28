@@ -1,0 +1,35 @@
+---
+# ─────────────────────────────────────────────────────────────────────────────
+# Variables communes — Staging Element Web
+# Aucun secret en clair dans ce fichier.
+# ─────────────────────────────────────────────────────────────────────────────
+
+environment_name: staging
+deploy_user: devops
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+# element_install_docker: true  # Valeur par défaut du rôle
+
+# ── Element Web ───────────────────────────────────────────────────────────────
+element_container_name: element-web
+element_image: vectorim/element-web
+element_version: latest
+element_http_port: 8080
+docker_bind_address: "0.0.0.0"
+
+element_base_dir: /opt/element-web
+
+# ── Configuration Matrix ──────────────────────────────────────────────────────
+element_default_homeserver_url: "https://matrix-users.staging.lavallee.tech"
+element_default_homeserver_name: "matrix-users.staging.lavallee.tech"
+
+element_disable_custom_urls: false
+element_disable_guests: true
+element_brand: "Element — Staging"
+element_default_theme: "light"
+
+# ── Homeservers additionnels (optionnel) ──────────────────────────────────────
+# element_additional_homeservers:
+#   - base_url: "https://matrix-bridges.staging.lavallee.tech"
+#     server_name: "matrix-bridges.staging.lavallee.tech"
+element_additional_homeservers: []

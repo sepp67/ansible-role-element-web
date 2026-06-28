@@ -1,0 +1,65 @@
+---
+# ─────────────────────────────────────────────────────────────────────────────
+# ansible-role-element-web — Variables par défaut
+#
+# Aucun secret ne doit être défini ici.
+# Les secrets (si nécessaires à l'avenir) doivent être fournis via Ansible Vault
+# dans les group_vars de l'inventaire.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+# Installer Docker Engine + Docker Compose v2 automatiquement.
+# Mettre à false si Docker est déjà géré par un autre rôle.
+element_install_docker: true
+
+# Adresse d'écoute du port Docker publié.
+# 0.0.0.0 est requis si le reverse proxy est sur une VM séparée.
+docker_bind_address: "0.0.0.0"
+
+# Utilisateur système utilisé pour les opérations Docker Compose.
+# Doit appartenir au groupe "docker".
+deploy_user: devops
+
+# Nom de l'environnement — utilisé dans les commentaires des fichiers générés.
+environment_name: staging
+
+# ── Image ─────────────────────────────────────────────────────────────────────
+element_image: vectorim/element-web
+element_version: latest
+
+# ── Conteneur ─────────────────────────────────────────────────────────────────
+element_container_name: element-web
+
+# Port HTTP exposé sur l'hôte (vers le reverse proxy).
+element_http_port: 8080
+
+# ── Répertoires ───────────────────────────────────────────────────────────────
+element_base_dir: /opt/element-web
+
+# ── Configuration Element ─────────────────────────────────────────────────────
+# URL publique du homeserver Matrix principal (Synapse Users).
+element_default_homeserver_url: "https://matrix-users.example.com"
+
+# server_name du homeserver Matrix (tel que déclaré dans Synapse).
+element_default_homeserver_name: "matrix-users.example.com"
+
+# Empêcher les utilisateurs de changer de homeserver depuis l'interface.
+element_disable_custom_urls: false
+
+# Interdire les connexions invités (guest access).
+element_disable_guests: true
+
+# Nom affiché de l'application dans l'interface.
+element_brand: "Element"
+
+# Thème par défaut : "light" ou "dark".
+element_default_theme: "light"
+
+# ── Homeservers additionnels (optionnel) ──────────────────────────────────────
+# Liste de homeservers supplémentaires proposés à l'utilisateur.
+# Vide par défaut. Exemple d'utilisation :
+#
+# element_additional_homeservers:
+#   - base_url: "https://matrix-bridges.example.com"
+#     server_name: "matrix-bridges.example.com"
+element_additional_homeservers: []

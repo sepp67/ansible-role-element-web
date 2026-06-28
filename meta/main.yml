@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  role_name: element_web
+  author: sepp67
+  description: >-
+    Deploy Element Web (Matrix client) as a Docker Compose service on Debian 12.
+    Designed to work alongside ansible-role-matrix-stack without coupling.
+  license: MIT
+  min_ansible_version: "2.14"
+  platforms:
+    - name: Debian
+      versions:
+        - bookworm
+  galaxy_tags:
+    - matrix
+    - element
+    - docker
+    - webclient
+    - chat
+dependencies: []

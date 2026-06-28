@@ -1,0 +1,57 @@
+---
+# ─────────────────────────────────────────────────────────────────────────────
+# ansible-role-element-web — Point d'entrée
+#
+# Déploie Element Web comme service Docker Compose sur Debian 12.
+# Ce rôle ne gère pas Synapse, PostgreSQL, ni le reverse proxy.
+# ─────────────────────────────────────────────────────────────────────────────
+
+- name: Install Docker Engine and Docker Compose v2
+  ansible.builtin.include_tasks:
+    file: install_docker.yml
+  when: element_install_docker | bool
+
+- name: Create Element Web base directory
+  ansible.builtin.file:
+    path: "{{ element_base_dir }}"
+    state: directory
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_user }}"
+    mode: "0750"
+  become: true
+
+- name: Deploy docker-compose.yml
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ element_base_dir }}/docker-compose.yml"
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_user }}"
+    mode: "0640"
+  become: true
+  notify: Restart element-web
+
+- name: Deploy config.json
+  ansible.builtin.template:
+    src: config.json.j2
+    dest: "{{ element_base_dir }}/config.json"
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_user }}"
+    mode: "0640"
+  become: true
+  notify: Restart element-web
+
+- name: Pull Element Web image
+  community.docker.docker_image:
+    name: "{{ element_image }}:{{ element_version }}"
+    source: pull
+    force_source: false
+  become: true
+  become_user: "{{ deploy_user }}"
+
+- name: Start Element Web via Docker Compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ element_base_dir }}"
+    state: present
+    pull: missing
+  become: true
+  become_user: "{{ deploy_user }}"

@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+*.retry
+.molecule/
+molecule/
+.ansible/
+examples/inventories/*/group_vars/all/vault.yml
+# Le symlink examples/roles/element_web est versionné intentionnellement

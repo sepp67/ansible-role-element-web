@@ -1,0 +1,23 @@
+{
+  "default_server_config": {
+    "m.homeserver": {
+      "base_url": "{{ element_default_homeserver_url }}",
+      "server_name": "{{ element_default_homeserver_name }}"
+    }
+  },
+{% if element_additional_homeservers | length > 0 %}
+  "additional_homeservers": [
+{% for hs in element_additional_homeservers %}
+    {
+      "base_url": "{{ hs.base_url }}",
+      "server_name": "{{ hs.server_name }}"
+    }{% if not loop.last %},{% endif %}
+
+{% endfor %}
+  ],
+{% endif %}
+  "disable_custom_urls": {{ element_disable_custom_urls | lower }},
+  "disable_guests": {{ element_disable_guests | lower }},
+  "brand": "{{ element_brand }}",
+  "default_theme": "{{ element_default_theme }}"
+}

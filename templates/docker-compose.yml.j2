@@ -1,0 +1,18 @@
+# Généré par ansible-role-element-web — ne pas éditer manuellement
+# Environnement : {{ environment_name }}
+
+services:
+  {{ element_container_name }}:
+    image: "{{ element_image }}:{{ element_version }}"
+    container_name: "{{ element_container_name }}"
+    restart: unless-stopped
+    ports:
+      - "{{ docker_bind_address }}:{{ element_http_port }}:80"
+    volumes:
+      - "{{ element_base_dir }}/config.json:/app/config.json:ro"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/config.json"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

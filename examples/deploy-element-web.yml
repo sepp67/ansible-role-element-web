@@ -1,0 +1,22 @@
+---
+# ─────────────────────────────────────────────────────────────────────────────
+# deploy-element-web.yml — Playbook d'exemple
+#
+# Déploie Element Web sur le groupe element_web de l'inventaire.
+#
+# Usage :
+#   # Staging
+#   ansible-playbook -i examples/inventories/staging examples/deploy-element-web.yml
+#
+#   # Vérification syntaxique
+#   ansible-playbook -i examples/inventories/staging examples/deploy-element-web.yml --syntax-check
+#
+# Prérequis :
+#   ansible-galaxy collection install -r requirements.yml
+# ─────────────────────────────────────────────────────────────────────────────
+
+- name: Deploy Element Web
+  hosts: element_web
+  become: true
+  roles:
+    - role: element_web
